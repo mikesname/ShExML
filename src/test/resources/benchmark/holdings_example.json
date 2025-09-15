@@ -1,0 +1,661 @@
+{
+  "data": {
+    "documentaryUnits": {
+      "items": [
+        {
+          "id": "cz-002279-collection_jmp_shoah_t-2-a-10-c-318-019-document_jmp_shoah_t_2_a_10c_318_019_001",
+          "type": "DocumentaryUnit",
+          "identifier": "DOCUMENT.JMP.SHOAH/T/2/A/10c/318/019/001",
+          "otherIdentifiers": [],
+          "descriptions": [
+            {
+              "languageCode": "deu",
+              "name": "Verzeichnis der Aufführungsabende in Theresienstadt - Mai 1943 - Juli 1944",
+              "identifier": null,
+              "accessPoints": [
+                {
+                  "id": "73427daa-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, Otto (* 23.11.1900)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427da8-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Munk, Karel (* 23.1.1893)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427da6-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischerová, Irma (* 21.9.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427da4-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Knapp, Rudolf (* 28.12.1887)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427dac-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Freizeitgestaltung",
+                  "type": "corporateBody"
+                },
+                {
+                  "id": "73427d8a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Illová, Ludmila (* 25.5.1888)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d88-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fleischmann, Karel (* 22.2.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d86-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Schorsch, Gustav (* 29.1.1918)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d84-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Jelinek, Zdeněk (* 18.12.1919)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d92-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Strass, Jiří (* 8.10.1912)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d90-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, František (* 20.5.1902)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d8e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Salus, Miloš (* 4.9.1896)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d8c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Prager, Vilém (* 9.6.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d9a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Dubský, Jaroslav (* 11.8.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d98-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Košek, Josef (* 23.10.1904)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d96-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Taussig, Josef (* 1.12.1914)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d94-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Böhm, Zdeněk (* 6.7.1922)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427da2-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Vohryzek, Leopold (* 30.3.1862)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427da0-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Utitz, Antonín (* 13.8.1908)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d9e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Bäumel, Richard (* 10.6.1881)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d9c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Neumann, Ervín (* 26.8.1905)",
+                  "type": "person"
+                },
+                {
+                  "id": "73427d7a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Terezín",
+                  "type": "place"
+                },
+                {
+                  "id": "73427d80-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "hudba",
+                  "type": "subject"
+                },
+                {
+                  "id": "73427d82-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Cabarets",
+                  "type": "subject"
+                },
+                {
+                  "id": "73427d7c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Culture",
+                  "type": "subject"
+                },
+                {
+                  "id": "73427d7e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Lectures",
+                  "type": "subject"
+                }
+              ],
+              "dates": [],
+              "archivistNote": null,
+              "archivalHistory": null,
+              "acquisition": null,
+              "appraisal": null,
+              "accruals": null,
+              "biographicalHistory": null,
+              "conditionsOfAccess": null,
+              "conditionsOfReproduction": null,
+              "datesOfDescriptions": null,
+              "extentAndMedium": "6 Folio; 6 Pages",
+              "levelOfDescription": null,
+              "relatedUnitsOfDescription": null,
+              "physicalCharacteristics": null,
+              "publicationNote": null,
+              "ref": "http://collections.jewishmuseum.cz/index.php/Detail/Object/Show/object_id/138146",
+              "rulesAndConventions": null,
+              "scopeAndContent": null,
+              "separatedUnitsOfDescription": null,
+              "systemOfArrangement": null,
+              "findingAids": [],
+              "languageOfMaterial": [
+                "Deutsch"
+              ],
+              "locationOfOriginals": [],
+              "locationOfCopies": [],
+              "parallelFormsOfName": [],
+              "physicalLocation": [],
+              "notes": [],
+              "scriptOfMaterial": [],
+              "sources": [],
+              "unitDates": [
+                "May 1 1943 - July 31 1944"
+              ]
+            },
+            {
+              "languageCode": "eng",
+              "name": "List of performances in the evenings in Terezín - May 1943 - July 1944",
+              "identifier": null,
+              "accessPoints": [
+                {
+                  "id": "4e0d3170-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, Otto (* 23.11.1900)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3172-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Freizeitgestaltung",
+                  "type": "corporateBody"
+                },
+                {
+                  "id": "4e0d316c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischerová, Irma (* 21.9.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d316e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Munk, Karel (* 23.1.1893)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3140-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Terezín",
+                  "type": "place"
+                },
+                {
+                  "id": "4e0d3142-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Culture",
+                  "type": "subject"
+                },
+                {
+                  "id": "4e0d3144-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Lectures",
+                  "type": "subject"
+                },
+                {
+                  "id": "4e0d3146-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "hudba",
+                  "type": "subject"
+                },
+                {
+                  "id": "4e0d3148-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Cabarets",
+                  "type": "subject"
+                },
+                {
+                  "id": "4e0d314a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Jelinek, Zdeněk (* 18.12.1919)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d314e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fleischmann, Karel (* 22.2.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d314c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Schorsch, Gustav (* 29.1.1918)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3152-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Prager, Vilém (* 9.6.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3150-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Illová, Ludmila (* 25.5.1888)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3156-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, František (* 20.5.1902)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3154-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Salus, Miloš (* 4.9.1896)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d315a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Böhm, Zdeněk (* 6.7.1922)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3158-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Strass, Jiří (* 8.10.1912)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d315e-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Košek, Josef (* 23.10.1904)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d315c-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Taussig, Josef (* 1.12.1914)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3162-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Neumann, Ervín (* 26.8.1905)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3160-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Dubský, Jaroslav (* 11.8.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3166-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Utitz, Antonín (* 13.8.1908)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3164-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Bäumel, Richard (* 10.6.1881)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d316a-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Knapp, Rudolf (* 28.12.1887)",
+                  "type": "person"
+                },
+                {
+                  "id": "4e0d3168-c8c4-11e4-b7bf-4dff20362a6d",
+                  "name": "Vohryzek, Leopold (* 30.3.1862)",
+                  "type": "person"
+                }
+              ],
+              "dates": [],
+              "archivistNote": null,
+              "archivalHistory": null,
+              "acquisition": null,
+              "appraisal": null,
+              "accruals": null,
+              "biographicalHistory": null,
+              "conditionsOfAccess": null,
+              "conditionsOfReproduction": null,
+              "datesOfDescriptions": null,
+              "extentAndMedium": "6 Folio; 6 Pages",
+              "levelOfDescription": null,
+              "relatedUnitsOfDescription": null,
+              "physicalCharacteristics": null,
+              "publicationNote": null,
+              "ref": "http://collections.jewishmuseum.cz/index.php/Detail/Object/Show/object_id/138146",
+              "rulesAndConventions": null,
+              "scopeAndContent": null,
+              "separatedUnitsOfDescription": null,
+              "systemOfArrangement": null,
+              "findingAids": [],
+              "languageOfMaterial": [
+                "deu"
+              ],
+              "locationOfOriginals": [],
+              "locationOfCopies": [],
+              "parallelFormsOfName": [],
+              "physicalLocation": [],
+              "notes": [],
+              "scriptOfMaterial": [],
+              "sources": [],
+              "unitDates": [
+                "May 1 1943 - July 31 1944"
+              ]
+            },
+            {
+              "languageCode": "ces",
+              "name": "Seznam recitačních večerů v Terezíně - květen 1943 - červenec 1944",
+              "identifier": null,
+              "accessPoints": [
+                {
+                  "id": "9fa3f352-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Taussig, Josef (* 1.12.1914)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f342-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Schorsch, Gustav (* 29.1.1918)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f35e-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Vohryzek, Leopold (* 30.3.1862)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f360-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Knapp, Rudolf (* 28.12.1887)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f348-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Prager, Vilém (* 9.6.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f344-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Fleischmann, Karel (* 22.2.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f33c-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "hudba",
+                  "type": "subject"
+                },
+                {
+                  "id": "9fa3f33e-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Cabarets",
+                  "type": "subject"
+                },
+                {
+                  "id": "9fa3f340-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Jelinek, Zdeněk (* 18.12.1919)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f33a-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Lectures",
+                  "type": "subject"
+                },
+                {
+                  "id": "9fa3f34a-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Salus, Miloš (* 4.9.1896)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f346-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Illová, Ludmila (* 25.5.1888)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f35a-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Bäumel, Richard (* 10.6.1881)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f338-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Culture",
+                  "type": "subject"
+                },
+                {
+                  "id": "9fa3f336-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Terezín",
+                  "type": "place"
+                },
+                {
+                  "id": "9fa3f362-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischerová, Irma (* 21.9.1897)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f35c-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Utitz, Antonín (* 13.8.1908)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f358-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Neumann, Ervín (* 26.8.1905)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f356-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Dubský, Jaroslav (* 11.8.1901)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f34e-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Strass, Jiří (* 8.10.1912)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f350-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Böhm, Zdeněk (* 6.7.1922)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f354-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Košek, Josef (* 23.10.1904)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f34c-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, František (* 20.5.1902)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f368-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Freizeitgestaltung",
+                  "type": "corporateBody"
+                },
+                {
+                  "id": "9fa3f366-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Fischer, Otto (* 23.11.1900)",
+                  "type": "person"
+                },
+                {
+                  "id": "9fa3f364-c8c2-11e4-b7bf-4dff20362a6d",
+                  "name": "Munk, Karel (* 23.1.1893)",
+                  "type": "person"
+                }
+              ],
+              "dates": [],
+              "archivistNote": null,
+              "archivalHistory": null,
+              "acquisition": null,
+              "appraisal": null,
+              "accruals": null,
+              "biographicalHistory": null,
+              "conditionsOfAccess": null,
+              "conditionsOfReproduction": null,
+              "datesOfDescriptions": null,
+              "extentAndMedium": "6 Folio; 6 Pages",
+              "levelOfDescription": null,
+              "relatedUnitsOfDescription": null,
+              "physicalCharacteristics": null,
+              "publicationNote": null,
+              "ref": "http://collections.jewishmuseum.cz/index.php/Detail/Object/Show/object_id/138146",
+              "rulesAndConventions": null,
+              "scopeAndContent": null,
+              "separatedUnitsOfDescription": null,
+              "systemOfArrangement": null,
+              "findingAids": [],
+              "languageOfMaterial": [
+                "německy"
+              ],
+              "locationOfOriginals": [],
+              "locationOfCopies": [],
+              "parallelFormsOfName": [],
+              "physicalLocation": [],
+              "notes": [],
+              "scriptOfMaterial": [],
+              "sources": [],
+              "unitDates": [
+                "May 1 1943 - July 31 1944"
+              ]
+            }
+          ],
+          "parent": {
+            "id": "cz-002279-collection_jmp_shoah_t-2-a-10-c-318-019"
+          },
+          "itemCount": 0,
+          "repository": {
+            "id": "cz-002279"
+          }
+        },
+        {
+          "id": "us-005578-irn625813-irn625905",
+          "type": "DocumentaryUnit",
+          "identifier": "irn625905",
+          "otherIdentifiers": [
+            "2016.559.40",
+            "2015.364"
+          ],
+          "descriptions": [
+            {
+              "languageCode": "eng",
+              "name": "Sample of lacework",
+              "identifier": "irn625813#ENG",
+              "accessPoints": [
+                {
+                  "id": "a126ed1d-636a-11ee-b336-b7f9045a65c5",
+                  "name": "Object",
+                  "type": "genre"
+                },
+                {
+                  "id": "a126ed1b-636a-11ee-b336-b7f9045a65c5",
+                  "name": "Decorative Arts",
+                  "type": "genre"
+                }
+              ],
+              "dates": [],
+              "archivistNote": null,
+              "archivalHistory": "The lace was donated to the United States Holocaust Memorial Museum in 2016 by Dr. Marilyn Greenwald.",
+              "acquisition": "United States Holocaust Memorial Museum Collection, Gift of Marilyn Greenwald",
+              "appraisal": null,
+              "accruals": null,
+              "biographicalHistory": null,
+              "conditionsOfAccess": "No restrictions on access",
+              "conditionsOfReproduction": "No restrictions on use",
+              "datesOfDescriptions": null,
+              "extentAndMedium": "overall: | Diameter: 2.130 inches (5.41 cm)",
+              "levelOfDescription": "item",
+              "relatedUnitsOfDescription": null,
+              "physicalCharacteristics": null,
+              "publicationNote": null,
+              "ref": null,
+              "rulesAndConventions": null,
+              "scopeAndContent": "Small piece of lacework with spider web pattern.",
+              "separatedUnitsOfDescription": null,
+              "systemOfArrangement": null,
+              "findingAids": [],
+              "languageOfMaterial": [],
+              "locationOfOriginals": [],
+              "locationOfCopies": [],
+              "parallelFormsOfName": [],
+              "physicalLocation": [],
+              "notes": [],
+              "scriptOfMaterial": [],
+              "sources": [],
+              "unitDates": []
+            }
+          ],
+          "parent": {
+            "id": "us-005578-irn625813"
+          },
+          "itemCount": 0,
+          "repository": {
+            "id": "us-005578"
+          }
+        },
+        {
+          "id": "de-002429-rh_19_iv",
+          "type": "DocumentaryUnit",
+          "identifier": "RH 19-IV",
+          "otherIdentifiers": [],
+          "descriptions": [
+            {
+              "languageCode": "deu",
+              "name": "Oberkommando der Heeresgruppe D (Oberbefehlshaber West, Oberbefehlshaber Süd)",
+              "identifier": null,
+              "accessPoints": [],
+              "dates": [
+                {
+                  "startDate": "1935-01-01",
+                  "endDate": "1945-12-31"
+                }
+              ],
+              "archivistNote": null,
+              "archivalHistory": "In Frankreich wurde am 26. Oktober 1940 aus Teilen des Oberkommandos Heeresgruppe C der Stab der Heeresgruppe D aufgestellt, der ab April 1941 zugleich Oberbefehlshaber West war und diese Bezeichnung ab November 1944 ausschließlich führte. Von 1940 bis zum Invasionsbeginn war sie Besatzungsmacht im Westen und befehligte anschließend die Kämpfe an der Westfront. Nach Durchbrechung der deutschen West- und Ostfront und Vereinigung der amerikanischen und sowjetischen Truppen in Torgau wurde OB West am 25. April 1945 zum Oberbefehlshaber Süd umbenannt und mit der Führung sämtlicher deutschen Verbände und Truppen in Süddeutschland beauftragt.",
+              "acquisition": null,
+              "appraisal": null,
+              "accruals": null,
+              "biographicalHistory": "Ab Oktober 1940 im Westen; ab April 1940 zugleich Oberbefehlshaber West; a ab Nov. 1944 nur als Ob. West; ab März 1945 Ob. Süd.",
+              "conditionsOfAccess": null,
+              "conditionsOfReproduction": null,
+              "datesOfDescriptions": null,
+              "extentAndMedium": "392 AE6,0 lfm\n\nSchriftgut",
+              "levelOfDescription": "fonds",
+              "relatedUnitsOfDescription": "[RH 15 OKH/Allgemeines Heeresamt/Abwicklungsstab OB West, RH 2 OKH/Generalstab des Heeres, ZA 1 Studiengruppe der US-Historical Division]",
+              "physicalCharacteristics": null,
+              "publicationNote": null,
+              "ref": null,
+              "rulesAndConventions": null,
+              "scopeAndContent": "OB: nur 3 Akten aus1942-1945.\n\nChef d. Gen.St.: Chefsachen von Oktober 1943 bis Mai 1944 und 6 Akten über die Vorbereitungen zur Ardennenoffensive 1944.\n\nIa: KTB von Oktober 1940 bis Juni 1941 und von Oktober 1943 bis Dezember 1944 sowie zahlreiche Unterlagen über den Einsatz der V-Waffen 1944/45 und über Festungen und Verteidigungsstellungen 1943/44.\n\nOQu.: TB von Oktober 1940 bis Juni 1941 und KTB von Januar bis August 1944.\n\nIc: TB von Oktober 1940 bis Juni 1941 und von Oktober 1943 bis Dezember 1944 sowie Tagesmeldungen bis März 1945.\n\nIIa: TB von Oktober 1940 bis Juni 1941 und von Oktober 1943 bis Dezember 1944.\n\nGen. d. Pioniere: TB von Oktober 1943 bis Dezember 1944.\n\nGen. d. Transportwesens West: TB von Oktober bis Dezember 1943.\n\nNa.Fü.: TB von Juli bis Dezember 1941 und von Oktober 1943 bis Dezember 1944.\n\nNSFO: TB von April bis Juni 1944 und verschiedene Unterlagen (4 AE).\n\nDer Bestand ist wichtig vor allem für die Kämpfe seit der Invasion am 6. Juni 1944 in der Normandie, für die andere Unterlagen weitgehend fehlen. Darüber hinaus dokumentieren zahlreiche Akten den Einsatz der sogenannten V-Waffen und den Kampf der Atlantikfestungen. Enthalten sind außerdem die Geheimen Kommando- und Chefsachen des Heeresgruppenkommandos 2 vom April 1935 bis Dezember 1940.",
+              "separatedUnitsOfDescription": null,
+              "systemOfArrangement": null,
+              "findingAids": [],
+              "languageOfMaterial": [],
+              "locationOfOriginals": [],
+              "locationOfCopies": [],
+              "parallelFormsOfName": [],
+              "physicalLocation": [],
+              "notes": [],
+              "scriptOfMaterial": [],
+              "sources": [
+                "RHD 52",
+                "Merkblätter 1944, Abwehr im Feldheer 1941 u.a.",
+                "Guides to German Records Microfilmed at Alexandria/Va., Washington 1958 ff., Bde. 40 und 52",
+                "Tessin, Georg: Verbände und Truppen der deutschen Wehrmacht und Waffen-SS im Zweiten Weltkrieg 1939-1945. 20 Bde. Osnabrück 1967 ff.",
+                "Held, Walter: Verbände und Truppen der deutschen Wehrmacht und Waffen-SS im Zweiten Weltkrieg. Eine Bibliographie der deutschsprachigen Nachkriegsliteratur. 5 Bde. Osnabrück 1978 ff."
+              ],
+              "unitDates": []
+            }
+          ],
+          "parent": null,
+          "itemCount": 0,
+          "repository": {
+            "id": "de-002429"
+          }
+        }
+      ]
+    }
+  }
+}

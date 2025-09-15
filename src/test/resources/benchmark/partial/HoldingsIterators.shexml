@@ -1,0 +1,63 @@
+ITERATOR components_iterator <jsonpath: $.data.documentaryUnits.items[*]> {
+	PUSHED_FIELD holding_id <id>
+	FIELD parentId <parent.id>
+	FIELD identifier <identifier>
+	FIELD itemCount <itemCount>
+	FIELD repositoryId <repository.id>
+	ITERATOR descriptions <descriptions[*]> {
+		PUSHED_FIELD languageCode <languageCode>
+		FIELD name <name>
+		FIELD identifier <identifier>
+		FIELD archivistNote <archivistNote>
+		FIELD archivalHistory <archivalHistory>
+		FIELD acquisition <acquisition>
+		FIELD appraisal <appraisal>
+		FIELD accruals <accruals>
+		FIELD biographicalHistory <biographicalHistory>
+		FIELD conditionsOfUse <conditionsOfUse>
+		FIELD conditionsOfAccess <conditionsOfAccess>
+		FIELD conditionsOfReproduction <conditionsOfReproduction>
+		FIELD datesOfDescription <datesOfDescription>
+		FIELD extentAndMedium <extentAndMedium>
+		FIELD levelOfDescription <levelOfDescription>
+		FIELD relatedUnitsOfDescription <relatedUnitsOfDescription>
+		FIELD physicalCharacteristics <physicalCharacteristics>
+		FIELD publicationNote <publicationNote>
+		FIELD ref <ref>
+		FIELD rulesAndConventions <rulesAndConventions>
+		FIELD scopeAndContent <scopeAndContent>
+		FIELD separatedUnitsOfDescription <separatedUnitsOfDescription>
+		FIELD systemOfArrangement <systemOfArrangement>
+		FIELD findingAids <findingAids>
+		FIELD sources <sources>
+		FIELD unitDates <unitDates>
+		FIELD locationOfOriginals <locationOfOriginals>
+		FIELD locationOfCopies <locationOfCopies>
+		FIELD physicalLocation <physicalLocation>
+		FIELD notes <notes>
+		ITERATOR languageOfMaterial <languageOfMaterial> {
+			FIELD lang <[*]>
+		}
+		ITERATOR dates <dates[*]> {
+			FIELD startDate <startDate>
+			FIELD endDate <endDate>
+			POPPED_FIELD holding_id <holding_id>
+		}
+		ITERATOR scriptOfMaterial <scriptOfMaterial> {
+			FIELD script <[*]>
+			POPPED_FIELD holding_id <holding_id>
+		}
+		ITERATOR parallelFormsOfName <parallelFormsOfName> {
+			FIELD name <[*]>
+			POPPED_FIELD holding_id <holding_id>
+			POPPED_FIELD langCode <languageCode>
+		}
+    }
+	ITERATOR otherIdentifiers <otherIdentifiers> {
+		FIELD identifier <[*]>
+		POPPED_FIELD holding_id <holding_id>
+	}
+}
+
+EXPRESSION holding <holdings.components_iterator>
+EXPRESSION parallel_name_id <holdings.components_iterator.descriptions.parallelFormsOfName.holding_id + "/parallelNames/" + holdings.components_iterator.descriptions.parallelFormsOfName.name>
