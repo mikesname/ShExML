@@ -33,7 +33,7 @@ class SourceHelper {
   }
 
   def getStdinContents(): LoadedSource = {
-    LoadedSource(scala.io.Source.stdin.getLines().mkString, "-")
+    LoadedSource(scala.io.Source.stdin.mkString, "-")
   }
 
 }
