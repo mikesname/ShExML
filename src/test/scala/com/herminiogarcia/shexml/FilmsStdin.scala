@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream
 
 class FilmsStdin extends AnyFunSuite
   with Matchers with RDFStatementCreator
-  with BeforeAndAfter with ParallelConfigInferenceDatatypesNormaliseURIsFixture{
+  with BeforeAndAfter with ParallelConfigInferenceDatatypesNormaliseURIsFixture {
 
   private val example =
     """
