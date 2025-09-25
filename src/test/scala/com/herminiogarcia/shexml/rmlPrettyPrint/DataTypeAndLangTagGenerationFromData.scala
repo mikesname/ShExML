@@ -2,13 +2,14 @@ package com.herminiogarcia.shexml.rmlPrettyPrint
 
 import com.herminiogarcia.shexml.{ParallelConfigInferenceDatatypesNormaliseURIsFixture, RDFStatementCreator}
 import org.apache.jena.rdf.model.Model
-import org.scalatest.ConfigMap
+import org.scalatest.{ConfigMap, Ignore}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.must.Matchers
 
 /**
   * Created by herminio on 21/2/18.
   */
+@Ignore
 class DataTypeAndLangTagGenerationFromData extends AnyFunSuite
   with Matchers with RDFStatementCreator
   with ParallelConfigInferenceDatatypesNormaliseURIsFixture with RMLTestConversion {

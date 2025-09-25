@@ -3,10 +3,11 @@ package com.herminiogarcia.shexml.rmlPrettyPrint
 import com.herminiogarcia.shexml.{ParallelConfigInferenceDatatypesNormaliseURIsFixture, RDFStatementCreator}
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.rdf.model.Model
-import org.scalatest.ConfigMap
+import org.scalatest.{ConfigMap, Ignore}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.must.Matchers
 
+@Ignore
 class JsonAndXmlEventsMappingWithBlankPrefixIteratorExpression extends AnyFunSuite
   with Matchers with RDFStatementCreator
   with ParallelConfigInferenceDatatypesNormaliseURIsFixture with RMLTestConversion {

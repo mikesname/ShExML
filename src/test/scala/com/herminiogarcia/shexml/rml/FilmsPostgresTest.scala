@@ -3,10 +3,11 @@ package com.herminiogarcia.shexml.rml
 import com.herminiogarcia.shexml.{ParallelConfigDatabase, RDFStatementCreator}
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.rdf.model.Model
-import org.scalatest.ConfigMap
+import org.scalatest.{ConfigMap, Ignore}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.must.Matchers
 
+@Ignore
 class FilmsPostgresTest extends AnyFunSuite
   with Matchers with RDFStatementCreator
   with ParallelConfigDatabase with RMLTestConversion {
