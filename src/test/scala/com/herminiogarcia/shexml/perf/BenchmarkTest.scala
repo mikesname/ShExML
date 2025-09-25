@@ -2,6 +2,7 @@ package com.herminiogarcia.shexml.perf
 
 import com.herminiogarcia.shexml.{ParallelConfigInferenceDatatypesNormaliseURIsFixture, RDFStatementCreator}
 import com.herminiogarcia.shexml.helper.SourceHelper
+import com.herminiogarcia.shexml.visitor.FunctionHubExecutorCache
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.rdf.model.Model
 import org.scalatest.funsuite.AnyFunSuite
@@ -39,7 +40,8 @@ class BenchmarkTest extends AnyFunSuite
     for (_ <- 1 to runs) {
       try {
         System.setIn(stream)
-        output = mappingLauncher.launchMapping(ast, varTable).getDefaultModel
+        val functionCache = new FunctionHubExecutorCache
+        output = mappingLauncher.launchMapping(ast, varTable, functionCache).getDefaultModel
       } catch {
         case e: Exception => e.printStackTrace()
       } finally {

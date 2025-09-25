@@ -5,7 +5,7 @@ import com.herminiogarcia.shexml.ast._
 import com.herminiogarcia.shexml.helper.{OrphanBNodeRemover, ParallelExecutionConfigurator, SourceHelper}
 import com.herminiogarcia.shexml.parser.ASTCreatorVisitor
 import com.herminiogarcia.shexml.shex._
-import com.herminiogarcia.shexml.visitor.{PushedOrPoppedValueSearchVisitor, RDFGeneratorVisitor, RMLGeneratorVisitor, VarTableBuilderVisitor}
+import com.herminiogarcia.shexml.visitor.{FunctionHubExecutorCache, PushedOrPoppedValueSearchVisitor, RDFGeneratorVisitor, RMLGeneratorVisitor, VarTableBuilderVisitor}
 import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 import org.apache.jena.query.{Dataset, DatasetFactory}
 import org.apache.jena.riot.{RDFDataMgr, RDFFormat, RDFLanguages}
@@ -56,8 +56,8 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
     (ast, varTable)
   }
 
-  def launchMapping(ast: AST, varTable: mutable.HashMap[Variable, VarResult]): Dataset = {
-    generateResultingRDF(ast, varTable)
+  def launchMapping(ast: AST, varTable: mutable.HashMap[Variable, VarResult], functionHubExecutorCache: FunctionHubExecutorCache): Dataset = {
+    generateResultingRDF(ast, varTable, functionHubExecutorCache)
   }
 
   def launchRMLTranslation(mappingCode: String, prettify: Boolean = false): String = {
@@ -160,7 +160,7 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
     varTable
   }
 
-  private def generateResultingRDF(ast: AST, varTable: mutable.HashMap[Variable, VarResult]): Dataset = {
+  private def generateResultingRDF(ast: AST, varTable: mutable.HashMap[Variable, VarResult], functionCache: FunctionHubExecutorCache = new FunctionHubExecutorCache()): Dataset = {
 
     val dataset = DatasetFactory.create()
     val pushedOrPoppedFields = searchForPushedOrPoppedFields(ast)
@@ -169,6 +169,7 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
       parallelCollectionConfigurator = parallelCollectionConfigurator,
+      functionHubExecutorCache = functionCache
     ).doVisit(ast, null)
     //val in = new ByteArrayInputStream(output.toString().getBytes)
     //val model = ModelFactory.createDefaultModel()

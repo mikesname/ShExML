@@ -12,14 +12,12 @@ class PushedOrPoppedValueSearchVisitor extends DefaultVisitor[Any, Boolean] {
 
     case Iterator(_, _, fields, iterators) => {
       val resultInFields = fields.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
-      val resultsInIterators = iterators.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
-      resultInFields || resultsInIterators
+      resultInFields || iterators.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
     }
 
     case NestedIterator(_, _, fields, iterators) => {
       val resultInFields = fields.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
-      val resultsInIterators = iterators.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
-      resultInFields || resultsInIterators
+      resultInFields || iterators.map(doVisit(_, optionalArgument)).find(_.self).getOrElse(false)
     }
 
     case Field(_, _, pushed, popped) => pushed || popped
