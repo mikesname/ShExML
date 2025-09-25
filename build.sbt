@@ -31,6 +31,7 @@ lazy val shexml = project
       "es.weso" %% "srdf4j" % "0.1.104" % "test",
       "es.weso" %% "srdf" % "0.1.104" % "test",
       "com.jayway.jsonpath" % "json-path" % "2.8.0",
+//      "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.5",
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((3, _)) => "org.scala-lang" % "scala-reflect" % "2.13.9"
         case Some((2, n)) if n >= 12 => "org.scala-lang" % "scala-reflect" % scalaVersion.value

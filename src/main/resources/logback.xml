@@ -4,7 +4,15 @@
             <pattern>%d{HH:mm:ss.SSS} %-5level[%thread] [%class] - %msg%n</pattern>
         </encoder>
     </appender>
-    <root level="info">
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>debug.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level[%thread] [%class] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.herminiogarcia.shexml.visitor.RDFGeneratorVisitor" level="INFO"/>
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
+<!--        <appender-ref ref="FILE" />-->
     </root>
 </configuration>

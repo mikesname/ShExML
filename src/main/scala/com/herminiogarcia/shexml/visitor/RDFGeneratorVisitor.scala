@@ -5,25 +5,27 @@ import com.herminiogarcia.shexml.ast.{AST, Action, ActionOrLiteral, AutoIncremen
 import com.herminiogarcia.shexml.helper.{FunctionHubExecutor, LoadedSource, ParallelExecutionConfigurator, SourceHelper}
 import com.herminiogarcia.shexml.shex.{Node, ShExMLInferredCardinalitiesAndDatatypes, ShapeMapInference, ShapeMapShape}
 import com.herminiogarcia.shexml.visitor
+import com.jayway.jsonpath.Configuration.ConfigurationBuilder
 import com.jayway.jsonpath.{Configuration, DocumentContext}
 import com.typesafe.scalalogging.Logger
-import net.sf.saxon.s9api.{Processor, XdmNode}
 import net.minidev.json.JSONArray
+import net.sf.saxon.s9api.{Processor, XdmNode}
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.datatypes.{RDFDatatype, TypeMapper}
-import org.apache.jena.query.{Dataset, QueryExecutionFactory, QueryFactory, ResultSet, TxnType}
+import org.apache.jena.query._
 import org.apache.jena.rdf.model._
 import org.apache.jena.riot.RDFDataMgr
 import org.apache.jena.util.SplitIRI
 
-import scala.collection.concurrent
 import java.io.{File, StringReader}
 import java.sql.DriverManager
+import java.util
 import java.util.concurrent.ConcurrentLinkedQueue
 import javax.xml.transform.stream.StreamSource
+import scala.collection.JavaConverters._
+import scala.collection.concurrent
 import scala.collection.immutable.HashSet
 import scala.util.Try
-import scala.collection.JavaConverters._
 
 /**
   * Created by herminio on 26/12/17.
@@ -35,7 +37,8 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
                           pushedOrPoppedFieldsPresent: Boolean = true,
                           inferenceDatatype: Boolean = false,
                           normaliseURIs: Boolean = false,
-                          parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None))
+                          parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None),
+                          val functionHubExecutorCache: FunctionHubExecutorCache = new FunctionHubExecutorCache())
   extends DefaultVisitor[Any, Any] with JdbcDriverRegistry {
 
   var stdinBuffer: Option[LoadedSource] = None
@@ -50,12 +53,17 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
   protected val jsonObjectMapperCache = new JsonObjectMapperCache()
   protected val xpathQueryResultsCache = new XpathQueryResultsCache(pushedOrPoppedFieldsPresent)
   protected val xmlDocumentCache = new XMLDocumentCache()
-  protected val functionHubExecuterCache = new FunctionHubExecutorCache()
   protected val defaultModel = dataset.getDefaultModel
-  protected val jsonPathConfiguration = Configuration.defaultConfiguration()
-    .addOptions(com.jayway.jsonpath.Option.ALWAYS_RETURN_LIST)
-    .addOptions(com.jayway.jsonpath.Option.DEFAULT_PATH_LEAF_TO_NULL)
-    .addOptions(com.jayway.jsonpath.Option.SUPPRESS_EXCEPTIONS)
+
+  private  val jsonPathConfiguration: Configuration = new ConfigurationBuilder()
+    .options(
+      util.EnumSet.of(
+        com.jayway.jsonpath.Option.ALWAYS_RETURN_LIST,
+        com.jayway.jsonpath.Option.DEFAULT_PATH_LEAF_TO_NULL,
+        com.jayway.jsonpath.Option.SUPPRESS_EXCEPTIONS
+      )
+    ).build()
+
 
 
   private val xmlProcessor = new Processor(false)
@@ -409,8 +417,10 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
 
     case f: FunctionCalling => {
       val functionsIRI = varTable(f.functionHub).asInstanceOf[FilePath]
-      val functionHub = functionHubExecuterCache.search(functionsIRI.value) match {
-        case Some(executor) => executor
+      val functionHub = functionHubExecutorCache.search(functionsIRI.value) match {
+        case Some(executor) =>
+          logger.info("Found function IRI in cache: {}", functionsIRI)
+          executor
         case None =>
           val loadedSource = functionsIRI match {
             case JdbcURL(jdbcURL) => throw new Exception(s"The JDBC URL $jdbcURL cannot be used as the source of functions.")
@@ -420,7 +430,8 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
             }
           }
           val executor = new FunctionHubExecutor(loadedSource)
-          functionHubExecuterCache.save(functionsIRI.value, executor)
+          logger.info("Caching function IRI {}", functionsIRI)
+          functionHubExecutorCache.save(functionsIRI.value, executor)
           executor
       }
       val argumentsResults = f.arguments.arguments.map(a => {
@@ -493,8 +504,8 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
               logger.debug("Retrieved cached result for already parsed JSON file {} ({})", file.filepath, file.digest)
               jsonNode
             case None =>
-              logger.debug("Caching JSON object mapper for file: {} ({})", file.filepath, file.digest)
               val jsonNode = com.jayway.jsonpath.JsonPath.using(jsonPathConfiguration).parse(file.fileContent)
+              logger.debug("Caching JSON object mapper for file: {} ({})", file.filepath, file.digest)
               jsonObjectMapperCache.save(file, jsonNode)
               jsonNode
           }
@@ -503,8 +514,13 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
             val finalList =
               if(result != null && !result.isEmpty) {
                 result.asScala.flatMap({
-                  case j: JSONArray => j.asScala.flatMap(r => if (r != null) List(r.toString) else Nil)
-                  case default => if (default != null) List(default.toString) else Nil
+                  case json: JSONArray => json.asScala.flatMap(r => if (r != null) List(r.toString) else Nil)
+                  case array: util.ArrayList[_] => array.asScala.flatMap(r => if (r != null) List(r.toString) else Nil)
+                  case str: String => List(str)
+                  case default =>
+                    if (default != null) {
+                      List(default.toString)
+                    } else Nil
                 }).toList
               } else Nil
             Result(Option(id), rootIds, finalList, None, None, None)

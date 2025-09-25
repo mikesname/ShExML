@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 import org.apache.jena.query.{Dataset, DatasetFactory}
 import org.apache.jena.riot.{RDFDataMgr, RDFFormat, RDFLanguages}
 import com.typesafe.scalalogging.Logger
+
 import java.io.ByteArrayOutputStream
 import scala.collection.JavaConverters._
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -42,11 +43,20 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
 
   def launchMapping(mappingCode: String): Dataset = {
     logger.info(s"Launching mapping")
+    val (ast, varTable) = initializeAST(mappingCode)
+    generateResultingRDF(ast, varTable)
+  }
+
+  def initializeAST(mappingCode: String): (AST, mutable.HashMap[Variable, VarResult]) = {
     logger.debug(s"Mapping rules $mappingCode")
     val lexer = createLexer(mappingCode)
     val parser = createParser(lexer)
     val ast = createAST(parser)
     val varTable = createVarTable(ast)
+    (ast, varTable)
+  }
+
+  def launchMapping(ast: AST, varTable: mutable.HashMap[Variable, VarResult]): Dataset = {
     generateResultingRDF(ast, varTable)
   }
 
@@ -158,7 +168,8 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       pushedOrPoppedFieldsPresent = pushedOrPoppedFields,
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
-      parallelCollectionConfigurator = parallelCollectionConfigurator).doVisit(ast, null)
+      parallelCollectionConfigurator = parallelCollectionConfigurator,
+    ).doVisit(ast, null)
     //val in = new ByteArrayInputStream(output.toString().getBytes)
     //val model = ModelFactory.createDefaultModel()
     //model.read(in, null, "TURTLE")

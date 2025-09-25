@@ -8,12 +8,13 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.{BeforeAndAfter, ConfigMap}
 
-import java.io.ByteArrayInputStream
+import java.io.{ByteArrayInputStream, FileOutputStream}
 
 class BenchmarkTest extends AnyFunSuite
   with Matchers with RDFStatementCreator
   with BeforeAndAfter with ParallelConfigInferenceDatatypesNormaliseURIsFixture{
 
+  private val runs = 30
   private val example =
     """
       |IMPORT <src/test/resources/benchmark/partial/HoldingsHeader.shexml>
@@ -30,15 +31,15 @@ class BenchmarkTest extends AnyFunSuite
 
   private var output: Model = _
 
-  test("Run the benchmark mapping 15 times") {
+  test(s"Run the benchmark mapping a number of time(s)") {
     val ois = System.in
     val stream = new ByteArrayInputStream(new SourceHelper().getContentFromRelativePath("./src/test/resources/benchmark/holdings_example.json").fileContent.getBytes())
     val start = System.currentTimeMillis()
-    for (_ <- 1 to 15) {
-      stream.reset()
+    val (ast, varTable) = mappingLauncher.initializeAST(example)
+    for (_ <- 1 to runs) {
       try {
         System.setIn(stream)
-        output = mappingLauncher.launchMapping(example).getDefaultModel
+        output = mappingLauncher.launchMapping(ast, varTable).getDefaultModel
       } catch {
         case e: Exception => e.printStackTrace()
       } finally {
@@ -46,9 +47,10 @@ class BenchmarkTest extends AnyFunSuite
         System.setIn(ois)
       }
     }
-    assert(output.size == 72)
     val end = System.currentTimeMillis()
     val duration = end - start
     println(s"Benchmark completed in $duration ms")
+//    output.write(new FileOutputStream("out2.rdf"))
+    assert(output.size == 72)
   }
 }
