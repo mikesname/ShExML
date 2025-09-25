@@ -479,23 +479,24 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
       logger.debug("Doing JSONPath query: {}", query)
       val arguments = optionalArgument.asInstanceOf[Map[String, Any]]
       val iteratorQuery = arguments.getOrElse("iteratorQuery", "").toString
-      val index = arguments.getOrElse("index", "")
+      val index = arguments.getOrElse("index", "").toString
       val file = arguments.getOrElse("file", null).asInstanceOf[LoadedSource]
-      jsonpathQueryResultsCache.search(query, file, index.toString) match {
+      jsonpathQueryResultsCache.search(query, file, index) match {
         case Some(result) =>
-          logger.debug("Retrieving cached result for JsonPath query {}", query)
+          logger.debug("Retrieved cached result for JsonPath query {}", query)
           result
         case None =>
           val id = (iteratorQuery + file.digest + index).hashCode
           val rootIds = arguments.getOrElse("rootIds", HashSet(id)).asInstanceOf[HashSet[Int]]
           val jsonContent =  jsonObjectMapperCache.search(file) match {
             case Some(jsonNode) =>
-              logger.debug("Retrieving cached result for already parsed JSON file")
+              logger.debug("Retrieved cached result for already parsed JSON file {} ({})", file.filepath, file.digest)
               jsonNode
             case None =>
-              val context = com.jayway.jsonpath.JsonPath.using(jsonPathConfiguration).parse(file.fileContent)
-              jsonObjectMapperCache.save(file, context)
-              context
+              logger.debug("Caching JSON object mapper for file: {} ({})", file.filepath, file.digest)
+              val jsonNode = com.jayway.jsonpath.JsonPath.using(jsonPathConfiguration).parse(file.fileContent)
+              jsonObjectMapperCache.save(file, jsonNode)
+              jsonNode
           }
           val result = jsonContent.read(query, classOf[java.util.List[Object]])
           val processedResult = {
@@ -508,7 +509,10 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
               } else Nil
             Result(Option(id), rootIds, finalList, None, None, None)
           }
-          if(processedResult.isInstanceOf[Result]) jsonpathQueryResultsCache.save(query, file, index.toString, processedResult.asInstanceOf[Result])
+          if(processedResult.isInstanceOf[Result]) {
+            logger.debug("Caching results for query '{}' on {} ({}) PushOrPopped: {}", query, file.filepath, file.digest, pushedOrPoppedFieldsPresent)
+            jsonpathQueryResultsCache.save(query, file, index, processedResult)
+          }
           processedResult
       }
     }
@@ -517,7 +521,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
       logger.debug("Doing XPath query: {}", query)
       val arguments = optionalArgument.asInstanceOf[Map[String, Any]]
       val iteratorQuery = arguments.getOrElse("iteratorQuery", "").toString
-      val index = arguments.getOrElse("index", "")
+      val index = arguments.getOrElse("index", "").toString
       val file = arguments.getOrElse("file", null).asInstanceOf[LoadedSource]
       xpathQueryResultsCache.search(query, file, index.toString) match {
         case Some(result) =>
@@ -538,7 +542,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
           val results = xmlProcessor.newXPathCompiler().evaluate(query, xmlDocument)
           val resultsAsList = results.asScala.toList.map(_.getStringValue)
           val finalResult = Result(Option(id), rootIds, resultsAsList, None, None, None)
-          xpathQueryResultsCache.save(query, file, index.toString, finalResult)
+          xpathQueryResultsCache.save(query, file, index, finalResult)
           finalResult
       }
 
@@ -1268,15 +1272,16 @@ class IteratorQueryResultsCache(pushedValues: Boolean) {
   private val table = concurrent.TrieMap[Int, Map[String, List[Result]]]()
 
   def search(iteratorQuery: String, file: LoadedSource): Option[Map[String, List[Result]]] = {
-    table.get((iteratorQuery + file.digest).hashCode)
+    if (!pushedValues) {
+      table.get((iteratorQuery + file.digest).hashCode)
+    } else None
   }
 
   def save(iteratorQuery: String, file: LoadedSource, results: Map[String, List[Result]]): Unit = {
-    val id = (iteratorQuery + file.digest).hashCode
     if(!pushedValues) {
+      val id = (iteratorQuery + file.digest).hashCode
       table += ((id, results))
     }
-
   }
 }
 
@@ -1284,12 +1289,14 @@ class JsonPathQueryResultsCache(pushedValues: Boolean) {
   private val table = concurrent.TrieMap[Int, Result]()
 
   def search(query: String, file: LoadedSource, index: String): Option[Result] = {
-    table.get((query + file.digest + index).hashCode)
+    if (!pushedValues) {
+      table.get((query + file.digest + index).hashCode)
+    } else None
   }
 
   def save(query: String, file: LoadedSource, index: String, result: Result): Unit = {
-    val id = (query + file.digest + index).hashCode
     if(!pushedValues) {
+      val id = (query + file.digest + index).hashCode
       table += ((id, result))
     }
   }
@@ -1325,19 +1332,21 @@ class XpathQueryResultsCache(pushedValues: Boolean) {
   private val table = concurrent.TrieMap[Int, Result]()
 
   def search(query: String, file: LoadedSource, index: String): Option[Result] = {
-    table.get((query + file.digest + index).hashCode)
+    if (!pushedValues) {
+      table.get((query + file.digest + index).hashCode)
+    } else None
   }
 
   def save(query: String, file: LoadedSource, index: String, result: Result): Unit = {
-    val id = (query + file.digest + index).hashCode
     if(!pushedValues) {
+      val id = (query + file.digest + index).hashCode
       table += ((id, result))
     }
   }
 }
 
 class FunctionHubExecutorCache() {
-  private val table = concurrent.TrieMap[String, FunctionHubExecutor]()
+   private val table = concurrent.TrieMap[String, FunctionHubExecutor]()
 
   def search(filepath: String): Option[FunctionHubExecutor] = {
     table.get(filepath)
