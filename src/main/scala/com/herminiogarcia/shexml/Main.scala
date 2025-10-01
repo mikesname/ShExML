@@ -20,7 +20,7 @@ object Main {
   }
 }
 
-@Command(name = "ShExML", version = Array("v0.6.0"),
+@Command(name = "ShExML", version = Array("v0.6.1"),
   mixinStandardHelpOptions = true,
   sortOptions = false,
   description = Array("Map and merge heterogeneous data sources with a Shape Expressions based syntax"))
