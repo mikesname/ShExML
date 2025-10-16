@@ -22,9 +22,14 @@ import scala.collection.mutable
 class MappingLauncher(val username: String = "", val password: String = "", drivers: String = "",
                       val inferenceDatatype: Boolean = false,
                       val normaliseURIs: Boolean = false,
-                      val parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None)) {
+                      val parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None),
+                      val basePath: String = "") {
 
   private val logger = Logger[MappingLauncher]
+
+  def withRelativeToPath(path: String): MappingLauncher = new MappingLauncher(
+    username, password, drivers, inferenceDatatype, normaliseURIs, parallelCollectionConfigurator, path
+  )
 
   def launchMapping(mappingCode: String, lang: String): String = {
     val startTime = System.currentTimeMillis()
@@ -169,7 +174,8 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
       parallelCollectionConfigurator = parallelCollectionConfigurator,
-      functionHubExecutorCache = functionCache
+      functionHubExecutorCache = functionCache,
+      basePath = basePath
     ).doVisit(ast, null)
     //val in = new ByteArrayInputStream(output.toString().getBytes)
     //val model = ModelFactory.createDefaultModel()
@@ -218,7 +224,7 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
   private def searchForPushedOrPoppedFields(ast: AST): Boolean = new PushedOrPoppedValueSearchVisitor().doVisit(ast, null)
 
   private def resolveImports(mappingRules: String): String = {
-    val sourceHelper = new SourceHelper()
+    val sourceHelper = SourceHelper(basePath)
     val regex = "[Ii][Mm][Pp][Oo][Rr][Tt]\\s*<(.+)>".r
     regex.replaceAllIn(mappingRules, matchedPart => {
       val importSource = matchedPart.group(1)

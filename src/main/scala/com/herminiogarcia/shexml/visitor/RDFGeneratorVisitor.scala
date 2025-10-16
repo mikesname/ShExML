@@ -38,7 +38,8 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
                           inferenceDatatype: Boolean = false,
                           normaliseURIs: Boolean = false,
                           parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None),
-                          val functionHubExecutorCache: FunctionHubExecutorCache = new FunctionHubExecutorCache())
+                          val functionHubExecutorCache: FunctionHubExecutorCache = new FunctionHubExecutorCache(),
+                          basePath: String = "")
   extends DefaultVisitor[Any, Any] with JdbcDriverRegistry {
 
   var stdinBuffer: Option[LoadedSource] = None
@@ -54,6 +55,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
   protected val xpathQueryResultsCache = new XpathQueryResultsCache(pushedOrPoppedFieldsPresent)
   protected val xmlDocumentCache = new XMLDocumentCache()
   protected val defaultModel = dataset.getDefaultModel
+  protected val sourceHelper: SourceHelper = SourceHelper(basePath)
 
   private  val jsonPathConfiguration: Configuration = new ConfigurationBuilder()
     .options(
@@ -90,7 +92,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
           r => r.map(doVisit(_, optionalArgument))
         )
       val numberOfTriples =
-        (graphs.map(g => prefixTable.getOrElse(g.graphName.prefix, "") + g.graphName.name).map(dataset.getNamedModel(_))
+        (graphs.map(g => prefixTable.getOrElse(g.graphName.prefix, "") + g.graphName.name).map(dataset.getNamedModel)
           :+ defaultModel).map(_.size()).sum
       logger.info(s"The mapping rules produced $numberOfTriples triples")
       if(firstShape.isEmpty) firstGraph.get
@@ -523,7 +525,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
                     } else Nil
                 }).toList
               } else Nil
-            Result(Option(id), rootIds, finalList, None, None, None)
+            Result(Some(id), rootIds, finalList, None, None, None)
           }
           if(processedResult.isInstanceOf[Result]) {
             logger.debug("Caching results for query '{}' on {} ({}) PushOrPopped: {}", query, file.filepath, file.digest, pushedOrPoppedFieldsPresent)
@@ -638,7 +640,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
       else if(url.contains('*'))
         throw new Exception("* wildcard not allowed over remote files")
       else
-        List(new SourceHelper().getURLContent(url))
+        List(sourceHelper.getURLContent(url))
 
     case RelativePath(path) =>
       if(isRDFSource(path)) {
@@ -649,14 +651,14 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
         List(LoadedSource("", fileProtocol + fileAbsolutePath))
       }
       else if(path.contains('*')) getAllFilesContents(path)
-      else List(new SourceHelper().getContentFromRelativePath(path))
+      else List(sourceHelper.getContentFromRelativePath(path))
 
     case JdbcURL(url) => List(LoadedSource("", url))
 
     case Stdin() =>
       stdinBuffer match {
         case None =>
-          val buffer = new SourceHelper().getStdinContents()
+          val buffer = sourceHelper.getStdinContents()
           stdinBuffer = Some(buffer)
           List(buffer)
         case Some(buffer) => List(buffer)
@@ -1040,7 +1042,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
     val files = new File(path).listFiles().filter(_.isFile)
       .filter(_.getName.endsWith(fileEnding + fileExtension)).filter(_.getName.startsWith(fileBeginning))
     val fileProtocol = if(path.startsWith("/")) "file://" else "file:///"
-    files.map(file => new SourceHelper().getURLContent(fileProtocol + file.getAbsolutePath.replaceAll("\\\\", "/"))).toList
+    files.map(file => sourceHelper.getURLContent(fileProtocol + file.getAbsolutePath.replaceAll("\\\\", "/"))).toList
   }
 
   private def visitAction(actionOrLiteral: ActionOrLiteral, predicateObjectsList: List[Any], optionalArgument: Any): List[Result] = actionOrLiteral match {

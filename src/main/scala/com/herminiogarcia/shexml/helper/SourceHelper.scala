@@ -4,6 +4,7 @@ package com.herminiogarcia.shexml.helper
 
 import java.io.{FileInputStream, InputStream}
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 import scala.io.Codec
 
 object LoadedSource {
@@ -31,11 +32,14 @@ case class LoadedSource(fileContent: String, filepath: String, digest: String)
 /**
   * Created by herminio on 21/2/18.
   */
-class SourceHelper {
+case class SourceHelper(basePath: String = "") {
 
   def getURLContent(url: String): LoadedSource = LoadedSource(new java.net.URL(url).openStream(), url)
 
-  def getContentFromRelativePath(path: String): LoadedSource = LoadedSource(new FileInputStream(path), path)
+  def getContentFromRelativePath(path: String): LoadedSource = {
+    val fullPath = Paths.get(basePath, path).toAbsolutePath.toString
+    LoadedSource(new FileInputStream(fullPath), fullPath)
+  }
 
   def getStdinContents(): LoadedSource = LoadedSource(System.in, "-")
 }
