@@ -18,6 +18,7 @@ import org.apache.jena.util.SplitIRI
 
 import scala.collection.concurrent
 import java.io.{File, StringReader}
+import java.nio.file.Path
 import java.sql.DriverManager
 import java.util.concurrent.ConcurrentLinkedQueue
 import javax.xml.transform.stream.StreamSource
@@ -35,7 +36,8 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
                           pushedOrPoppedFieldsPresent: Boolean = true,
                           inferenceDatatype: Boolean = false,
                           normaliseURIs: Boolean = false,
-                          parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None))
+                          parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None),
+                          basePath: Path)
   extends DefaultVisitor[Any, Any] with JdbcDriverRegistry {
 
   protected val prefixTable = concurrent.TrieMap[String, String](("rdf:", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"))
@@ -49,6 +51,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
   protected val xpathQueryResultsCache = new XpathQueryResultsCache(pushedOrPoppedFieldsPresent)
   protected val xmlDocumentCache = new XMLDocumentCache()
   protected val functionHubExecuterCache = new FunctionHubExecutorCache()
+  protected val sourceHelper: SourceHelper = SourceHelper()
   protected val defaultModel = dataset.getDefaultModel
   protected val jsonPathConfiguration = Configuration.defaultConfiguration()
     .addOptions(com.jayway.jsonpath.Option.ALWAYS_RETURN_LIST)
@@ -614,7 +617,7 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
       else if(url.contains('*'))
         throw new Exception("* wildcard not allowed over remote files")
       else
-        List(new SourceHelper().getURLContent(url))
+        List(sourceHelper.getURLContent(url))
 
     case RelativePath(path) =>
       if(isRDFSource(path)) {
@@ -625,11 +628,11 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
         List(LoadedSource("", fileProtocol + fileAbsolutePath))
       }
       else if(path.contains('*')) getAllFilesContents(path)
-      else List(new SourceHelper().getContentFromRelativePath(path))
+      else List(sourceHelper.getContentFromRelativePath(path, basePath))
 
     case JdbcURL(url) => List(LoadedSource("", url))
 
-    case Stdin() => List(new SourceHelper().getStdinContents())
+    case Stdin() => List(sourceHelper.getStdinContents())
 
 
     case default => visit(default, optionalArgument)
@@ -1007,10 +1010,11 @@ class RDFGeneratorVisitor(dataset: Dataset, varTable: Map[Variable, VarResult], 
     val fileBeginning = slices(0).splitAt(slices(0).lastIndexOf("/"))._2.replace("/", "")
     val fileEnding = slices(1).splitAt(slices(1).lastIndexOf("."))._1
     val fileExtension = slices(1).splitAt(slices(1).lastIndexOf("."))._2
-    val files = new File(path).listFiles().filter(_.isFile)
+    val normPath = basePath.resolve(path).normalize()
+    val files = normPath.toFile.listFiles().filter(_.isFile)
       .filter(_.getName.endsWith(fileEnding + fileExtension)).filter(_.getName.startsWith(fileBeginning))
     val fileProtocol = if(path.startsWith("/")) "file://" else "file:///"
-    files.map(file => new SourceHelper().getURLContent(fileProtocol + file.getAbsolutePath.replaceAll("\\\\", "/"))).toList
+    files.map(file => sourceHelper.getURLContent(fileProtocol + file.getAbsolutePath.replaceAll("\\\\", "/"))).toList
   }
 
   private def visitAction(actionOrLiteral: ActionOrLiteral, predicateObjectsList: List[Any], optionalArgument: Any): List[Result] = actionOrLiteral match {

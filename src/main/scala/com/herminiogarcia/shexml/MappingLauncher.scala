@@ -6,13 +6,15 @@ import com.herminiogarcia.shexml.helper.{OrphanBNodeRemover, ParallelExecutionCo
 import com.herminiogarcia.shexml.parser.ASTCreatorVisitor
 import com.herminiogarcia.shexml.shex._
 import com.herminiogarcia.shexml.visitor.{PushedOrPoppedValueSearchVisitor, RDFGeneratorVisitor, RMLGeneratorVisitor, VarTableBuilderVisitor}
+import com.typesafe.scalalogging.Logger
 import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 import org.apache.jena.query.{Dataset, DatasetFactory}
 import org.apache.jena.riot.{RDFDataMgr, RDFFormat, RDFLanguages}
-import com.typesafe.scalalogging.Logger
+
 import java.io.ByteArrayOutputStream
-import scala.collection.JavaConverters._
+import java.nio.file.Path
 import java.util.concurrent.ConcurrentLinkedQueue
+import scala.collection.JavaConverters._
 import scala.collection.mutable
 
 /**
@@ -21,7 +23,21 @@ import scala.collection.mutable
 class MappingLauncher(val username: String = "", val password: String = "", drivers: String = "",
                       val inferenceDatatype: Boolean = false,
                       val normaliseURIs: Boolean = false,
-                      val parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None)) {
+                      val parallelCollectionConfigurator: ParallelExecutionConfigurator = new ParallelExecutionConfigurator(Map(), None),
+                      val basePath: Path = Path.of("")) {
+
+  /**
+   * Java compatibility constructor.
+   */
+  def this(
+    username: String,
+    password: String,
+    drivers: String,
+    inferenceDatatype: Boolean,
+    normaliseURIs: Boolean,
+    parallelCollectionConfigurator: ParallelExecutionConfigurator) = {
+      this(username, password, drivers, inferenceDatatype, normaliseURIs, parallelCollectionConfigurator, Path.of(""))
+    }
 
   private val logger = Logger[MappingLauncher]
 
@@ -158,7 +174,8 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       pushedOrPoppedFieldsPresent = pushedOrPoppedFields,
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
-      parallelCollectionConfigurator = parallelCollectionConfigurator).doVisit(ast, null)
+      parallelCollectionConfigurator = parallelCollectionConfigurator,
+      basePath = basePath).doVisit(ast, null)
     //val in = new ByteArrayInputStream(output.toString().getBytes)
     //val model = ModelFactory.createDefaultModel()
     //model.read(in, null, "TURTLE")
@@ -167,7 +184,7 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
 
   private def generateResultingRML(ast: AST, varTable: mutable.HashMap[Variable, VarResult], prettify: Boolean): Dataset = {
     val output = DatasetFactory.create()
-    new RMLGeneratorVisitor(output, varTable.toMap, prettify, username, password).doVisit(ast, null)
+    new RMLGeneratorVisitor(output, varTable.toMap, prettify, username, password, basePath = basePath).doVisit(ast, null)
     output
   }
 
@@ -179,7 +196,9 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       pushedOrPoppedFieldsPresent = searchForPushedOrPoppedFields(ast),
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
-      parallelCollectionConfigurator = parallelCollectionConfigurator).doVisit(ast, null)
+      parallelCollectionConfigurator = parallelCollectionConfigurator,
+      basePath = basePath
+    ).doVisit(ast, null)
   }
 
   private def generateShapeMaps(ast: AST, varTable: mutable.HashMap[Variable, VarResult]): List[ShapeMapInference] = {
@@ -191,7 +210,9 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
       pushedOrPoppedFieldsPresent = searchForPushedOrPoppedFields(ast),
       inferenceDatatype = inferenceDatatype,
       normaliseURIs = normaliseURIs,
-      parallelCollectionConfigurator = parallelCollectionConfigurator).doVisit(ast, null)
+      parallelCollectionConfigurator = parallelCollectionConfigurator,
+      basePath = basePath
+    ).doVisit(ast, null)
     shapeMapTable.asScala.toList
   }
 
@@ -206,13 +227,13 @@ class MappingLauncher(val username: String = "", val password: String = "", driv
   private def searchForPushedOrPoppedFields(ast: AST): Boolean = new PushedOrPoppedValueSearchVisitor().doVisit(ast, null)
 
   private def resolveImports(mappingRules: String): String = {
-    val sourceHelper = new SourceHelper()
+    val sourceHelper = SourceHelper()
     val regex = "[Ii][Mm][Pp][Oo][Rr][Tt]\\s*<(.+)>".r
     regex.replaceAllIn(mappingRules, matchedPart => {
       val importSource = matchedPart.group(1)
       val loadedSource =
         if(importSource.contains("://")) sourceHelper.getURLContent(importSource)
-        else sourceHelper.getContentFromRelativePath(importSource)
+        else sourceHelper.getContentFromRelativePath(importSource, basePath)
       java.util.regex.Matcher.quoteReplacement(loadedSource.fileContent)
     })
   }
